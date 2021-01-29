@@ -60,7 +60,7 @@ router.post('/new', async (req, res, next) => {
     }
 })
 
-router.put('/:id/change', async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
     try {
         const { id } = req.params
         const { nickname, species, h2oFrequency, myStory, image, user_id } = req.body
