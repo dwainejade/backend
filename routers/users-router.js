@@ -27,7 +27,18 @@ router.post('/register', async (req, res, next) => {
             email
         })
 
-        res.status(201).json({ message: "User Created Successfully" })
+        const createdUser = await db('users').where({ username }).first()
+
+        const token = jwt.sign({
+            username: createdUser.username,
+            password: createdUser.password,
+        }, process.env.JWT_SECRET)
+
+        res.cookie('token', token)
+
+        res.status(201).json({
+            message: `Welcome, ${createdUser.username}`,
+        })
     } catch (err) {
         next(err)
     }
@@ -48,7 +59,7 @@ router.post('/login', async (req, res, next) => {
 
         if (!user || !passwordValid) {
             return res.status(401).json({
-                message: "invalid credentials",
+                message: "Invalid credentials",
             })
         }
 
@@ -60,7 +71,7 @@ router.post('/login', async (req, res, next) => {
         res.cookie('token', token)
 
         res.json({
-            message: `welcome, ${user.username}`,
+            message: `Welcome, ${user.username}`,
         })
     } catch (err) {
         next(err)
