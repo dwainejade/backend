@@ -3,6 +3,8 @@ const express = require("express");
 const welcomeRouter = require("./routers/welcome-router");
 
 const usersRouter = require('./routers/users-router');
+const plantsRouter = require('./routers/plants-router');
+
 const cookieParser = require('cookie-parser')
 
 const restrict = require('./routers/middleware/restricted');
@@ -20,6 +22,7 @@ server.use(cookieParser())
 server.use("/", welcomeRouter);
 
 server.use('/users', usersRouter);
+server.use('/plants', restrict, plantsRouter);
 
 
 server.use((err, req, res, next) => {
