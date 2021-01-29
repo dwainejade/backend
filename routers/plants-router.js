@@ -14,8 +14,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
     try {
         const { id } = req.params
-        const plant = await db('plants').where({ id }).first()
-
+        const plant = await db('plants').where('id', id).first()
         if (!plant) {
             return res.status(409).json({
                 message: "Plant does not exist in database",
@@ -41,7 +40,7 @@ router.get('/user/:id', async (req, res, next) => {
 
 router.post('/new', async (req, res, next) => {
     try {
-        const { nickname, species, h2oFrequency, myStory, image, user_id } = req.body
+        const { nickname, species, h2oFrequency, details, image, user_id } = req.body
         const nn = await db('plants').where({ nickname }).first()
 
         if (!nickname || !species || !h2oFrequency || !user_id) {
@@ -60,7 +59,7 @@ router.post('/new', async (req, res, next) => {
             nickname, 
             species, 
             h2oFrequency, 
-            myStory,
+            details,
             image,
             user_id
         })
@@ -74,7 +73,7 @@ router.post('/new', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
     try {
         const { id } = req.params
-        const { nickname, species, h2oFrequency, myStory, image, user_id } = req.body
+        const { nickname, species, h2oFrequency, details, image, user_id } = req.body
         const plant = await db('plants').where({ id }).first()
 
         if (!plant) {
@@ -87,7 +86,7 @@ router.put('/:id', async (req, res, next) => {
             nickname, 
             species, 
             h2oFrequency, 
-            myStory,
+            details,
             image,
             user_id
         })
