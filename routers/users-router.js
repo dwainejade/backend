@@ -4,6 +4,15 @@ const db = require('../data/config');
 
 const router = require('express').Router();
 
+router.get('/list', async (req, res, next) => {
+    try {
+        const userList = await db('users')
+        res.status(200).json(userList)
+    } catch (err) {
+        next(err)
+    }
+})
+
 router.post('/register', async (req, res, next) => {
     try {
         const { username, password, email } = req.body
@@ -38,6 +47,7 @@ router.post('/register', async (req, res, next) => {
 
         res.status(201).json({
             message: `Welcome, ${createdUser.username}`,
+            token
         })
     } catch (err) {
         next(err)
@@ -72,6 +82,7 @@ router.post('/login', async (req, res, next) => {
 
         res.json({
             message: `Welcome, ${user.username}`,
+            token
         })
     } catch (err) {
         next(err)
