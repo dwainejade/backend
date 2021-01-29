@@ -28,6 +28,17 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
+router.get('/user/:id', async (req, res, next) => {
+    try {
+        const plants = await db('plants')
+            .where('plants.user_id', req.params.id)
+            .select('*')
+        res.status(200).json(plants)
+    } catch (err) {
+        next(err)
+    }
+})
+
 router.post('/new', async (req, res, next) => {
     try {
         const { nickname, species, h2oFrequency, myStory, image, user_id } = req.body

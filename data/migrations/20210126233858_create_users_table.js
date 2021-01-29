@@ -12,7 +12,7 @@ exports.up = async function (knex) {
             table.string("nickname").notNull();
             table.string("species").notNull();
             table.string("h2oFrequency").notNull();
-            table.string("myStory");
+            table.string("details");
             table.integer("user_id")
                 .unsigned()
                 .notNull()
@@ -20,12 +20,12 @@ exports.up = async function (knex) {
                 .inTable("users")
                 .onUpdate('CASCADE')
                 .onDelete('CASCADE')
+            table.string("image")
         })
 };
 
 exports.down = async function (knex) {
     await knex.schema
-        .dropTableIfExists("users_plants")
         .dropTableIfExists("plants")
         .dropTableIfExists("users")
 };
