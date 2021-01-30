@@ -38,16 +38,20 @@ router.post('/register', async (req, res, next) => {
 
         const createdUser = await db('users').where({ username }).first()
 
-        const token = jwt.sign({
+        const payload = {
+            userId: createdUser.id,
             username: createdUser.username,
-            password: createdUser.password,
-        }, process.env.JWT_SECRET)
+            email: createdUser.email
+        }
+
+        const token = jwt.sign({ payload }, process.env.JWT_SECRET)
 
         res.cookie('token', token)
 
         res.status(201).json({
             message: `Welcome, ${createdUser.username}`,
-            token
+            token,
+            payload
         })
     } catch (err) {
         next(err)
@@ -72,17 +76,21 @@ router.post('/login', async (req, res, next) => {
                 message: "Invalid credentials",
             })
         }
-
-        const token = jwt.sign({
+        const payload = {
+            userId: user.id,
             username: user.username,
-            password: user.password,
-        }, process.env.JWT_SECRET)
+            email: user.email
+        }
+
+        const token = jwt.sign({ payload }, process.env.JWT_SECRET)
 
         res.cookie('token', token)
 
         res.json({
             message: `Welcome, ${user.username}`,
-            token
+            tokenmessage: `Welcome, ${user.username}`,
+            token,
+            payload
         })
     } catch (err) {
         next(err)
