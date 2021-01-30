@@ -32,7 +32,7 @@ router.post('/register', async (req, res, next) => {
 
         await db('users').insert({
             username,
-            password: await bcrypt.hash(password, 14),
+            password: await bcrypt.hash(password, 10),
             email
         })
 
@@ -88,7 +88,6 @@ router.post('/login', async (req, res, next) => {
 
         res.json({
             message: `Welcome, ${user.username}`,
-            tokenmessage: `Welcome, ${user.username}`,
             token,
             payload
         })
