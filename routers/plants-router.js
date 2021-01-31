@@ -104,9 +104,9 @@ router.put('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
     try {
         const { id } = req.params
-    await db('plants').where({ id }).del()
+        await db('plants').where({ id }).del()
 
-    res.status(204).end()
+        res.status(204).end()
     } catch (err) {
         next(err)
     }
