@@ -13,7 +13,7 @@ exports.up = async function (knex) {
             table.string("species").notNull();
             table.string("h2oFrequency").notNull();
             table.string("details");
-            table.date("last_watered");
+            table.string("last_watered");
             table.integer("user_id")
                 .unsigned()
                 .notNull()
