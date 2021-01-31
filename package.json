@@ -4,7 +4,7 @@
     "description": "Water My Plants database management",
     "main": "index.js",
     "scripts": {
-        "start": "node index.js",
+        "start": "cross-env NODE_ENV=development node index.js",
         "watch": "nodemon index.js",
         "server": "cross-env NODE_ENV=development nodemon --require dotenv/config index.js",
         "test": "cross-env NODE_ENV=testing JWT_SECRET=bigsecret jest --watchAll"
