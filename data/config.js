@@ -1,5 +1,10 @@
 const knex = require("knex")
 const knexfile = require("../knexfile")
-const environment = process.env.NODE_ENV || knexfile.development
+
+if (process.env.NODE_ENV) {
+    environment = process.env.NODE_ENV
+} else {
+    environment = knexfile.development
+}
 
 module.exports = knex(knexfile[environment])
