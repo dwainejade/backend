@@ -43,10 +43,7 @@ router.post('/register', async (req, res, next) => {
             username: createdUser.username,
             email: createdUser.email
         }
-
         const token = jwt.sign({ payload }, process.env.JWT_SECRET)
-
-        res.cookie('token', token)
 
         res.status(201).json({
             message: `Welcome, ${createdUser.username}`,
@@ -83,8 +80,6 @@ router.post('/login', async (req, res, next) => {
         }
 
         const token = jwt.sign({ payload }, process.env.JWT_SECRET)
-
-        res.cookie('token', token)
 
         res.json({
             message: `Welcome, ${user.username}`,
@@ -126,9 +121,7 @@ router.put('/:id', async (req, res, next) => {
             username: updatedUser.username,
             password: updatedUser.password,
         }, process.env.JWT_SECRET)
-
-        res.cookie('token', token)
-
+        
         res.status(200).json({
             message: `Updated, ${updatedUser.username}`,
             token
