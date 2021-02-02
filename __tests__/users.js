@@ -70,4 +70,5 @@ describe('users integration tests', () => {
         expect(res.type).toBe('application/json')
         expect(res.body.message).toBe('Updated, testUser')
     })
+
 })

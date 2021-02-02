@@ -106,7 +106,9 @@ router.delete('/:id', async (req, res, next) => {
         const { id } = req.params
         await db('plants').where({ id }).del()
 
-        res.status(204).end()
+        res.status(201).json({
+            message: `You have successfully deleted plant ${req.params.id}`
+        })
     } catch (err) {
         next(err)
     }

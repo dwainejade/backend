@@ -11,7 +11,7 @@
     },
     "jest": {
         "testEnvironment": "node"
-      },
+    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/tt-webpt-105-water-my-plants/backend.git"
