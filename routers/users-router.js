@@ -69,7 +69,7 @@ router.post('/login', async (req, res, next) => {
         }
 
         if (!user || !passwordValid) {
-            return res.status(401).json({
+            return res.status(401).send({
                 error: "Invalid credentials",
                 errorMessage: "Invalid credentials",
                 Message: "Invalid credentials",
