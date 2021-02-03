@@ -70,7 +70,9 @@ router.post('/login', async (req, res, next) => {
 
         if (!user || !passwordValid) {
             return res.status(401).json({
-                message: "Invalid credentials",
+                error: "Invalid credentials",
+                errorMessage: "Invalid credentials",
+                Message: "Invalid credentials",
             })
         }
         const payload = {
