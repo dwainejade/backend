@@ -58,21 +58,24 @@ router.post('/register', async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
     try {
         const { username, password } = req.body
-        const user = await db('users').where({ username }).first()
-
-        const passwordValid = await bcrypt.compare(password, user.password)
-
         if (!username || !password) {
             return res.status(409).json({
                 message: "username and password required",
             })
         }
 
-        if (!user || !passwordValid) {
-            return res.status(401).send({
-                error: "Invalid credentials",
-                errorMessage: "Invalid credentials",
-                Message: "Invalid credentials",
+        const user = await db('users').where({ username }).first()
+        
+        if (!user) {
+            return res.status(401).json({
+                message: "Invalid credentials"
+            })
+        }
+
+        const passwordValid = await bcrypt.compare(password, user.password)
+        if (!passwordValid) {
+            return res.status(401).json({
+                message: "Invalid credentials"
             })
         }
         const payload = {
@@ -80,9 +83,7 @@ router.post('/login', async (req, res, next) => {
             username: user.username,
             email: user.email
         }
-
         const token = jwt.sign({ payload }, process.env.JWT_SECRET)
-
         res.json({
             message: `Welcome, ${user.username}`,
             token,
@@ -123,7 +124,7 @@ router.put('/:id', async (req, res, next) => {
             username: updatedUser.username,
             password: updatedUser.password,
         }, process.env.JWT_SECRET)
-        
+
         res.status(200).json({
             message: `Updated, ${updatedUser.username}`,
             token
