@@ -67,13 +67,18 @@ router.post('/login', async (req, res, next) => {
         const user = await db('users').where({ username }).first()
 
         if (!user) {
-            res.send(401, 'Invalid credentials!')
+            return res.status(409).json({
+                message: "Invalid credentials!",
+            })
         }
 
         const passwordValid = await bcrypt.compare(password, user.password)
         if (!passwordValid) {
-            res.send(401, 'Invalid credentials!')
+            return res.status(409).json({
+                message: "Invalid credentials!",
+            })
         }
+
         const payload = {
             userId: user.id,
             username: user.username,
